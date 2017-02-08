@@ -33,7 +33,7 @@ def country_dropDown(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            selected_country =  form.cleaned_data['countries_drop_down']    
+            selected_country = form.cleaned_data['countries_drop_down']    
             
             # get woeid for the country selected
 
@@ -44,12 +44,14 @@ def country_dropDown(request):
 
             # get trending issues
             try:
-                result = t.trends.place(_id = woeid) 
+                result = t.trends.place(_id = woeid,count = 10) 
             except Exception as(e):
                 print str(e)
 
+            print result
+            i = 0
             for tweet in result[0]['trends']:
-               # trending_issues.append(tweet['name'])
+               trending_issues.append(tweet['name'])
                print tweet['name']
 
             print trending_issues    
