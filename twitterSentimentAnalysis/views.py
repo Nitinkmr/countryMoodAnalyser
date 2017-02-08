@@ -49,7 +49,7 @@ def country_dropDown(request):
                 print str(e)
 
             for tweet in result[0]['trends']:
-               # trending_issues.append(tweet['name'])
+               trending_issues.append(tweet['name'])
                print tweet['name']
 
             print trending_issues    
