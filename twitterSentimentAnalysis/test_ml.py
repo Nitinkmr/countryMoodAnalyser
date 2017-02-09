@@ -133,14 +133,21 @@ print NBClassifier.classify(extract_features(getFeatureVector(processedTestTweet
 print testTweet
 
 for testTweet in global_var.my_arr:
-    processedTestTweet = processTweet(testTweet)
-    print NBClassifier.classify(extract_features(getFeatureVector(processedTestTweet)))
-    print testTweet
+    try:
+        processedTestTweet = processTweet(testTweet)
+        sentiment =  NBClassifier.classify(extract_features(getFeatureVector(processedTestTweet)))
+        if str(sentiment) == "positive":
+            count = count+1
+        elif str(sentiment) == "neutral":
+            count = count + 0.5
+        total = total + 1;
+    except Exception as(e):
+        print str(e)
 
 
 
 
-global_var.result = 1
+global_var.result = (count*1.00)/total
 print global_var.result
 #Output
 '''

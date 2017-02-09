@@ -187,7 +187,7 @@ def tweets(request, value):
 
 
         
-        return render(request, 'tweets.html', {'tweets':tweets,'issue':selected_issue,'data':1})
+        return render(request, 'tweets.html', {'tweets':tweets,'issue':selected_issue,'data':global_var.result})
 
 
 def get_country():
