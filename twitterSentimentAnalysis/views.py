@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 
 from django.shortcuts import render
 from .forms import NameForm
+from django.http import HttpResponse
 
 from twitter import *
 import urllib
@@ -75,9 +76,20 @@ def tweets(request, value):
         print value
         print "yes\n\n\n\n\n"
         print len(trending_issues)
-        print str(trending_issues[value]['tweet'])       
-        #r =  t.search.tweets(trending_issues[value]['tweet'],lang="en")
-        #print r
+
+        selected_issue = "hello"
+        for issue in trending_issues:
+            if str(issue['index']) == value:
+               selected_issue = issue['tweet']
+               break 
+        print selected_issue
+        #selected_issue = trending_issues[0]
+        #print str(trending_issues[0][value])       
+        try:
+            r =  t.search.tweets(q = str(selected_issue),lang="en")
+            print r
+        except Exception as(e):
+                print str(e)
         return HttpResponse("blahblah")
 
 def get_country():
