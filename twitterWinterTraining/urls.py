@@ -17,8 +17,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from twitterSentimentAnalysis import views
-
+from twitterSentimentAnalysis.views import tweets
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin', admin.site.urls),
+    url(r'^(?P<value>\d+)/', tweets, name='tweets'),
     url(r'^', views.country_dropDown),
+    
 ]

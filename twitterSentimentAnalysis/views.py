@@ -1,13 +1,13 @@
-from django.shortcuts import render
-
 from django.http import HttpResponseRedirect
 
+from django.shortcuts import render
 from .forms import NameForm
 
 from twitter import *
 import urllib
 import json
 from countries import country_list
+from global_var import get_issues
 # Create your views here.
 
 selected_country = ''
@@ -22,7 +22,7 @@ t = Twitter(
 
 def country_dropDown(request):
     # if this is a POST request we need to process the form data
-    trending_issues = []
+    trending_issues = get_issues()
          
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -51,8 +51,11 @@ def country_dropDown(request):
             print result
             i = 0
             for tweet in result[0]['trends']:
-               trending_issues.append(tweet['name'])
+               trending_issues.append({'tweet':tweet['name'],'index':i})
                print tweet['name']
+               i = i+1
+               if i == 10:
+                break
 
             print trending_issues    
        #    return HttpResponseRedirect('/trending_issues')
@@ -65,6 +68,18 @@ def country_dropDown(request):
     
     return render(request, 'index.html', {'form': form,'trending_issues':trending_issues})
 
+def tweets(request, value):
+        #print request.GET.
+        trending_issues = get_issues()
+        print trending_issues
+        print value
+        print "yes\n\n\n\n\n"
+        print len(trending_issues)
+        print str(trending_issues[value]['tweet'])       
+        #r =  t.search.tweets(trending_issues[value]['tweet'],lang="en")
+        #print r
+        return HttpResponse("blahblah")
 
 def get_country():
     return selected_country
+ 

@@ -2,21 +2,59 @@
 <html>
 <head>
 	<title>sentiment analysis</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
+
+<script type="text/javascript">
+
+
+function load_list()	
+{
+	var i = 0;
+	var div = document.getElementById("div_issues");
+//#console.log({{trending_issues}});
+	for(i=0;i<10;i++)	
+	$("#div_issues").append('<a href="' + i + ' ">link</a>');
+}
+ 
+function get_tweets_into_links()
+{
+	console.log({{trending_issues}});
+}        
+//window.onload = load_list;
+
+
+/*window.onload = */
+</script>
 <body>
 
+<div class="dropdown">
 <form action="" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Submit" />
+    <button type="submit" class="btn btn-default" value="Submit">Submit</button>
 </form>
+</div>
+<!--"{% url 'tweets' 2 %}"-->
 
+<div id="div_issues"></div>
+<!--{% with i as 0 %} -->
 {% for issue in trending_issues %}
 	<ul>
-		<li>{{ issue }}</li>
+		<li><a href = '/{{issue.index}}/'> {{issue.tweet}} </a></li>
 	</ul>
-{% endfor %}
 
+	{% with i as i+1 %}
+	{%endwith%}
+{% endfor %}
+{%endwith%}
+
+
+<a href="" > adsa</a>
+<a href="{% url 'tweets' 2 %}">Subset1</a>
+<!--<button onclick="get_tweets_into_links()"> </button>
 </body>
 </html>
 
