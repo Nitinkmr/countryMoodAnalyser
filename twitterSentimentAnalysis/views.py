@@ -3,12 +3,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import NameForm
 from django.http import HttpResponse
-
+from django.shortcuts import render_to_response
 from twitter import *
 import urllib
 import json
 from countries import country_list
 from global_var import get_issues
+from global_var import get_tweets
 # Create your views here.
 
 selected_country = ''
@@ -77,7 +78,7 @@ def tweets(request, value):
         print "yes\n\n\n\n\n"
         print len(trending_issues)
 
-        selected_issue = "hello"
+        selected_issue = " "
         for issue in trending_issues:
             if str(issue['index']) == value:
                selected_issue = issue['tweet']
@@ -85,13 +86,20 @@ def tweets(request, value):
         print selected_issue
         #selected_issue = trending_issues[0]
         #print str(trending_issues[0][value])       
+        tweets = get_tweets()
         try:
             r =  t.search.tweets(q = str(selected_issue),lang="en")
-            print r
+            for result in r['statuses']:
+                tweets.append(str(result['text'].encode('utf-8')))
+                #print result['text']
         except Exception as(e):
                 print str(e)
-        return HttpResponse("blahblah")
+        
+        print tweets
+
+        return render(request, 'tweets.html', {'tweets':tweets,'issue':selected_issue,'data':0.4})
+
 
 def get_country():
     return selected_country
- 
+

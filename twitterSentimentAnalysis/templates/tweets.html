@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
+<script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+  <style type="text/css">
+    
+    .table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 400px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+#chartdiv {
+  width   : 100%;
+  height    : 500px;
+  font-size : 11px;
+}
+.slice1 .amcharts-pie-slice {
+  fill: #f00;
+}
+
+.slice2 .amcharts-pie-slice {
+  fill: #006400;
+}
+  </style>
+  <script type="text/javascript">
+    var chart = AmCharts.makeChart( "chartdiv", {
+  "type": "pie",
+  "theme": "light",
+  "addClassNames": true,
+  "dataProvider": [ {
+    "sentiment": "positive",
+    "sentiment_value": {{data}},
+    "class": "slice2"
+  }, {
+    "sentiment": "negative",
+    "sentiment_value": 1-{{data}},
+    "class": "slice1"
+  } ],
+  "valueField": "sentiment_value",
+  "titleField": "sentiment",
+  "classNameField": "class",
+  "export": {
+    "enabled": true,
+    "libs": {
+      "path": "http://www.amcharts.com/lib/3/plugins/export/libs/"
+    }
+  }
+} );
+
+    function myfunc()
+    {
+
+      console.log({{data}});
+    }
+  </script>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>
+          Most Recent Tweets For {{issue}}
+          </h4>
+        </div>
+        <table class="table table-fixed">
+         
+          <tbody>
+
+            {% for tweet in tweets%}
+              <tr>
+              <td class="col-xs-8">{{tweet}}</td>
+              </tr>
+            {% endfor %}
+
+
+            
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+
+<div id="chartdiv"></div> 
+
+<<button onclick="myfunc()">btn</button>
+</body>
+</html>
+
