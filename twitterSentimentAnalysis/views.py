@@ -14,6 +14,8 @@ import time
 import re
 import nltk
 
+global trending_issues
+trending_issues = []
 stopWords = []
 featureList = []
 
@@ -108,7 +110,10 @@ t = Twitter(
 def country_dropDown(request):
     # if this is a POST request we need to process the form data
     #trending_issues = get_issues()
-    trending_issues = []
+    
+    #trending_issues = []
+    #global_var.trending_issues = trending_issues
+    
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = NameForm(request.POST)
@@ -138,15 +143,19 @@ def country_dropDown(request):
                i = i+1
                if i == 10:
                 break
-
-       #    return HttpResponseRedirect('/trending_issues')
+           # global_var.set_issues(trending_issues)   
+            #global_var.trending_issues = trending_issues
+           # print global_var.trending_issues 
+            print trending_issues
+            print "issues \n\n\n"        
+           # return HttpResponseRedirect('/trending_issues')
         else:
             print "error in country selection"
     # if a GET (or any other method) we'll create a blank form
     else:
         form = NameForm()      
     
-    global_var.set_issues(trending_issues)
+    #global_var.set_issues(trending_issues)
 
     
     return render(request, 'index.html', {'form': form,'trending_issues':trending_issues})
@@ -160,9 +169,10 @@ def tweets(request, value):
         #print len(trending_issues)
 
 
-        selected_issue = " india"
-        print len(global_var.get_issues())
-        for issue in global_var.get_issues():
+        selected_issue = ""
+        print len(trending_issues)
+        
+        for issue in trending_issues:
             if str(issue['index']) == value:
                selected_issue = issue['tweet']
                break 

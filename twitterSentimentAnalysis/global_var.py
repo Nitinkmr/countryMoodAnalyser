@@ -1,4 +1,5 @@
-trending_issues =[]
+
+#trending_issues = []
 tweets = []
 my_arr = []
 NBClassifier = " "
